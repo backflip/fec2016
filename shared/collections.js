@@ -13,7 +13,6 @@ Meteor.methods({
 
   'OSM.update'(document) {
     Meteor.call('udpPort.send', document);
-    console.log(document)
     OSM.update(document._id, document);
   },
 
