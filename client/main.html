@@ -1,0 +1,22 @@
+<head>
+  <title>myapp</title>
+</head>
+
+<body>
+  <h1>Welcome to Meteor!</h1>
+
+  {{> hello}}
+</body>
+
+<template name="hello">
+  <ul>
+    <li>
+      aCv: {{aCv}}
+    </li>
+    <li>
+      aTr: {{aTr}}
+    </li>
+  </ul>
+  <button class="a-tr">a tr</button>
+  <input type="range" name="acv" min="0" max="1" step="0.01" value="{{aCv}}">
+</template>
