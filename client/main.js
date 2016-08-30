@@ -1,5 +1,5 @@
 import { Template } from 'meteor/templating';
-
+import rangetouch from 'rangetouch';
 import './main.html';
 
 function getOrCreateOSMObject(address) {
@@ -15,7 +15,7 @@ function getOrCreateOSMObject(address) {
   return OSMObject;
 }
 
-// Template.app.onCreated(function helloOnCreated() {
+// Template.app.onCreated(function appOnCreated() {
 // });
 
 Template.app.helpers({
@@ -35,7 +35,7 @@ Template.app.events({
   'input input'(event, instance) {
     var value = parseFloat(event.currentTarget.value, 10);
     var aCv = getOrCreateOSMObject('/osm/a/cv');
-    
+
     Meteor.call('OSM.update', {
       _id: aCv._id,
       address: aCv.address,
