@@ -4,20 +4,46 @@
 </head>
 
 <body>
-  <h1>Music!</h1>
+  <header>
+    <div class="wrapper">
+      <h1>Unic Music!</h1>
+    </div>
+  </header>
 
-  {{> app}}
+  <main>
+    <div class="wrapper">
+      {{> app}}
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrapper">
+      Made with ❤ at <a href="https://unic.com">Unic</a>
+    </div>
+  </footer>
 </body>
 
 <template name="app">
-  <ul>
-    <li>
-      aCv: {{aCv}}
-    </li>
-    <li>
-      aTr: {{aTr}}
-    </li>
-  </ul>
-  <button class="a-tr">a tr</button>
-  <input type="range" name="acv" min="0" max="1" step="0.01" value="{{aCv}}">
+  <div class="input">
+    <button class="a-tr" aria-pressed="{{isPressed(aTr)}}">a tr</button>
+    <button class="a-tr" aria-pressed="{{isPressed(aTr)}}">a tr</button>
+  </div>
+
+  <div class="input">
+    <div class="slider">
+      <label for="acv">aCv</label>
+      <input id="acv" type="range" name="acv" min="0" max="1" step="0.01" value="{{aCv}}">
+    </div>
+
+    <div class="value" role="presentation">{{aCv}}</div>
+  </div>
+
+  <div class="input">
+    <div class="slider">
+      <label for="acv">aCv</label>
+      <input id="acv" type="range" name="acv" min="0" max="1" step="0.01" value="{{aCv}}">
+    </div>
+
+    <div class="value" role="presentation">{{aCv}}</div>
+  </div>
 </template>

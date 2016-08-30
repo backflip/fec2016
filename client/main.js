@@ -2,6 +2,8 @@ import { Template } from 'meteor/templating';
 import rangetouch from 'rangetouch';
 import './main.html';
 
+var interval;
+
 function getOrCreateOSMObject(address) {
   var data = {address: address};
   var OSMObject = OSM.findOne(data);
@@ -28,6 +30,9 @@ Template.app.helpers({
     var aTr = OSM.findOne({address: '/osm/a/tr'}) || {}
     var value = aTr.value || 0;
     return value;
+  },
+  isPressed(value) {
+    return value !== 0;
   }
 });
 
@@ -42,12 +47,22 @@ Template.app.events({
       value: value
     });
   },
-  'click .a-tr'(event, instance) {
+  'click, touchstart .a-tr'(event, instance) {
     var aTr = getOrCreateOSMObject('/osm/a/tr');
 
     Meteor.call('OSM.trigger', {
       _id: aTr._id,
       address: aTr.address
     });
-  }
+  },
+  // 'touchstart .a-tr'(event, instance) {
+  //   interval = setInterval(function() {
+  //     console.log(1);
+  //   }, 100);
+  // },
+  // 'touchend .a-tr'(event, instance) {
+  //   if (interval) {
+  //     clearInterval(interval);
+  //   }
+  // }
 });
