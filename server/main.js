@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
-
 import osc from 'osc';
+
+let modules = [];
 
 // Create an osc.js UDP Port listening on port 57121.
 const udpPort = new osc.UDPPort({
@@ -8,43 +9,34 @@ const udpPort = new osc.UDPPort({
   localPort: 9000
 });
 
-let a;
-let b;
-
 // Open the socket.
 udpPort.open();
 
-udpPort.on("message", function (oscMsg) {
-  if (!a || !b) {
-    const target = oscMsg.args[0].split(':');
-    const ip = target[0];
-    const port = target[1];
+udpPort.on('message', function (oscMsg) {
+  const target = oscMsg.args[0].split(':');
+  const ip = target[0];
+  const port = target[1];
+  const moduleExists = modules.filter((module) => (module.ip === ip && module.port === port)).length;
 
-    if (!a) {
-      a = {
-        ip,
-        port
-      }
-    } else {
-      b = {
-        ip,
-        port
-      }
-    }
+  if (!moduleExists) {
+    modules.push({
+      ip,
+      port
+    })
   }
 
-  console.log(a, b);
+  console.log('Connected modules', modules);
 });
 
 Meteor.methods({
   'udpPort.send'({module, address, value}) {
-    const bla = (module === 'a') ? a : b;
+    const targetModule = modules[module];
 
-    if (bla) {
+    if (targetModule) {
       udpPort.send({
         address: address,
         args: [value]
-      }, bla.ip, bla.port);
+      }, targetModule.ip, targetModule.port);
     }
   }
 });

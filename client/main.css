@@ -75,7 +75,8 @@ h1 {
 }
 
 .slider label,
-.github span {
+.github span,
+button span {
     position: absolute;
     clip: rect(1px, 1px, 1px, 1px);
     padding: 0;

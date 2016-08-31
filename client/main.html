@@ -30,45 +30,53 @@
 
 <template name="app">
   <div class="input">
-    <button id="atr1" aria-pressed="{{isPressed(aTr1)}}">aTr1</button>
-    <button id="atr2" aria-pressed="{{isPressed(aTr2)}}">aTr2</button>
-    <button id="btr1" aria-pressed="{{isPressed(bTr1)}}">bTr1</button>
-    <button id="btr2" aria-pressed="{{isPressed(bTr2)}}">bTr2</button>
+    <button data-init="trigger" data-address="/osm/a/tr" data-module="0" aria-pressed="{{isTriggered '/osm/a/tr' '0'}}">
+      <span>Module 1, trigger A</span>
+    </button>
+    <button data-init="trigger" data-address="/osm/b/tr" data-module="0" aria-pressed="{{isTriggered '/osm/b/tr' '0'}}">
+      <span>Module 1, trigger B</span>
+    </button>
+    <button data-init="trigger" data-address="/osm/a/tr" data-module="1" aria-pressed="{{isTriggered '/osm/a/tr' '1'}}">
+      <span>Module 2, trigger A</span>
+    </button>
+    <button data-init="trigger" data-address="/osm/b/tr" data-module="1" aria-pressed="{{isTriggered '/osm/b/tr' '1'}}">
+      <span>Module 2, trigger B</span>
+    </button>
   </div>
 
   <div class="input">
     <div class="slider">
       <label for="acv1">aCv1</label>
-      <input id="acv1" type="range" name="acv1" min="0" max="1" step="0.01" value="{{aCv1}}">
+      <input id="acv1" type="range" name="acv1" min="0" max="1" step="0.01" value="{{getCV '/osm/a/cv' '0'}}" data-init="cv" data-address="/osm/a/cv" data-module="0">
     </div>
 
-    <div class="value" role="presentation">{{aCv1}}</div>
+    <div class="value" role="presentation">{{getCV '/osm/a/cv' '0'}}</div>
   </div>
 
   <div class="input">
     <div class="slider">
       <label for="acv2">aCv2</label>
-      <input id="acv2" type="range" name="acv2" min="0" max="1" step="0.01" value="{{aCv2}}">
+      <input id="acv2" type="range" name="acv2" min="0" max="1" step="0.01" value="{{getCV '/osm/b/cv' '0'}}" data-init="cv" data-address="/osm/b/cv" data-module="0">
     </div>
 
-    <div class="value" role="presentation">{{aCv2}}</div>
+    <div class="value" role="presentation">{{getCV '/osm/b/cv' '0'}}</div>
   </div>
 
   <div class="input">
     <div class="slider">
       <label for="bcv1">bCv1</label>
-      <input id="bcv1" type="range" name="bcv1" min="0" max="1" step="0.01" value="{{bCv1}}">
+      <input id="bcv1" type="range" name="bcv1" min="0" max="1" step="0.01" value="{{getCV '/osm/a/cv' '1'}}" data-init="cv" data-address="/osm/a/cv" data-module="1">
     </div>
 
-    <div class="value" role="presentation">{{bCv1}}</div>
+    <div class="value" role="presentation">{{getCV '/osm/a/cv' '1'}}</div>
   </div>
 
   <div class="input">
     <div class="slider">
       <label for="bcv2">bCv2</label>
-      <input id="bcv2" type="range" name="bcv2" min="0" max="1" step="0.01" value="{{bCv2}}">
+      <input id="bcv2" type="range" name="bcv2" min="0" max="1" step="0.01" value="{{getCV '/osm/b/cv' '1'}}" data-init="cv" data-address="/osm/b/cv" data-module="1">
     </div>
 
-    <div class="value" role="presentation">{{bCv2}}</div>
+    <div class="value" role="presentation">{{getCV '/osm/b/cv' '1'}}</div>
   </div>
 </template>
