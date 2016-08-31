@@ -32,15 +32,19 @@ udpPort.on("message", function (oscMsg) {
       }
     }
   }
+
+  console.log(a, b);
 });
 
 Meteor.methods({
   'udpPort.send'({module, address, value}) {
     const bla = (module === 'a') ? a : b;
 
-    udpPort.send({
-      address: address,
-      args: [value]
-    }, bla.ip, bla.port);
+    if (bla) {
+      udpPort.send({
+        address: address,
+        args: [value]
+      }, bla.ip, bla.port);
+    }
   }
 });
