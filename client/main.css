@@ -26,14 +26,13 @@ body {
     margin: 0;
 }
 
-@media (max-width: 50em) {
-    body {
-        font-size: 81.25%;
-    }
-}
-
 a {
     color: #a4c400;
+    transition: color .3s ease;
+}
+a:hover,
+a:focus {
+    color: #000000;
 }
 
 .wrapper {
@@ -74,7 +73,8 @@ h1 {
     box-shadow: inset 0 1px 1px rgba(52,63,74,.1), 0 1px 0 rgba(255,255,255,.15);
 }
 
-.slider label {
+.slider label,
+.github span {
     position: absolute;
     clip: rect(1px, 1px, 1px, 1px);
     padding: 0;
@@ -102,6 +102,7 @@ button {
     color: #fff;
     transition: background .3s ease;
     margin-right: 0.5em;
+    -webkit-user-select: none; /* Allow for tap and hold */
 }
 button:hover,
 button:focus {
@@ -110,6 +111,21 @@ button:focus {
 }
 button[aria-pressed=true] {
     background: #000;
+}
+.github {
+    position: relative;
+    top: 0.1em;
+    margin-left: 0.2em;
+}
+.github svg {
+    fill: #a4c400;
+    transition: fill .3s ease;
+    width: 1em;
+    height: 1em;
+}
+.github:hover svg,
+.github:focus svg {
+    fill: #000000;
 }
 
 /* Styles adapted from https://github.com/selz/rangetouch */
@@ -212,4 +228,18 @@ input[type=range]::-moz-range-track {
 }
 input[type=range]::-ms-track {
     background: #333333
+}
+
+
+
+
+@media (max-width: 50em) {
+
+    body {
+        font-size: 81.25%;
+    }
+
+    h1 {
+        font-size: 3em;
+    }
 }
