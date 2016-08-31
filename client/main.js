@@ -47,22 +47,24 @@ Template.app.events({
       value: value
     });
   },
-  'click, touchstart .a-tr'(event, instance) {
+  'mousedown .a-tr, touchstart .a-tr'(event, instance) {
     var aTr = getOrCreateOSMObject('/osm/a/tr');
-
+    
     Meteor.call('OSM.trigger', {
       _id: aTr._id,
       address: aTr.address
     });
+
+    interval = setInterval(function() {
+      Meteor.call('OSM.trigger', {
+        _id: aTr._id,
+        address: aTr.address
+      });
+    }, 100);
   },
-  // 'touchstart .a-tr'(event, instance) {
-  //   interval = setInterval(function() {
-  //     console.log(1);
-  //   }, 100);
-  // },
-  // 'touchend .a-tr'(event, instance) {
-  //   if (interval) {
-  //     clearInterval(interval);
-  //   }
-  // }
+  'mouseup .a-tr, touchend .a-tr'(event, instance) {
+    if (interval) {
+      clearInterval(interval);
+    }
+  }
 });

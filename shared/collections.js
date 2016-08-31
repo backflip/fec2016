@@ -1,5 +1,7 @@
 OSM = new Mongo.Collection('OSM');
 
+var timeout;
+
 Meteor.methods({
   'OSM.insert'(address) {
     data = {address};
@@ -20,10 +22,13 @@ Meteor.methods({
     document.value = 1;
     Meteor.call('udpPort.send', document);
     OSM.update(document._id, document);
-    setTimeout(Meteor.bindEnvironment(() => {
+    if (timeout) {
+      clearTimeout(timeout)
+    };
+    timeout = setTimeout(Meteor.bindEnvironment(() => {
       document.value = 0;
       Meteor.call('udpPort.send', document);
       OSM.update(document._id, document);
-    }), 300)
+    }), 300);
   }
 })
