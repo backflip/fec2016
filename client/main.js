@@ -2,6 +2,10 @@ import { Template } from 'meteor/templating';
 import rangetouch from 'rangetouch';
 import './main.html';
 
+if (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
+  document.documentElement.classList.add('touch');
+}
+
 function getOrCreateOSMObject(address, module) {
   var data = {address, module};
   var OSMObject = OSM.findOne(data);
