@@ -8,14 +8,39 @@ const udpPort = new osc.UDPPort({
   localPort: 9000
 });
 
+let a;
+let b;
+
 // Open the socket.
 udpPort.open();
 
+udpPort.on("message", function (oscMsg) {
+  if (!a || !b) {
+    const target = oscMsg.args[0].split(':');
+    const ip = target[0];
+    const port = target[1];
+
+    if (!a) {
+      a = {
+        ip,
+        port
+      }
+    } else {
+      b = {
+        ip,
+        port
+      }
+    }
+  }
+});
+
 Meteor.methods({
-  'udpPort.send'({address, value}) {
+  'udpPort.send'({module, address, value}) {
+    const bla = (module === 'a') ? a : b;
+
     udpPort.send({
       address: address,
       args: [value]
-    }, '192.168.1.242', 8000);
+    }, bla.ip, bla.port);
   }
 });

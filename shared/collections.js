@@ -3,12 +3,11 @@ OSM = new Mongo.Collection('OSM');
 var timeout;
 
 Meteor.methods({
-  'OSM.insert'(address) {
-    data = {address};
+  'OSM.insert'(data) {
     instace = OSM.findOne(data);
     // Make sure the address does not exist
     if (instace) {
-      throw new Meteor.Error(address + ' already exists');
+      throw new Meteor.Error(data + ' already exists');
     }
     OSM.insert(data);
   },
@@ -29,6 +28,6 @@ Meteor.methods({
       document.value = 0;
       Meteor.call('udpPort.send', document);
       OSM.update(document._id, document);
-    }), 300);
+    }), 100);
   }
 })

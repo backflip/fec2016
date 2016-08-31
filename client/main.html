@@ -30,25 +30,45 @@
 
 <template name="app">
   <div class="input">
-    <button class="a-tr" aria-pressed="{{isPressed(aTr)}}">a tr</button>
-    <button class="a-tr" aria-pressed="{{isPressed(aTr)}}">a tr</button>
+    <button id="atr1" aria-pressed="{{isPressed(aTr1)}}">aTr1</button>
+    <button id="atr2" aria-pressed="{{isPressed(aTr2)}}">aTr2</button>
+    <button id="btr1" aria-pressed="{{isPressed(bTr1)}}">bTr1</button>
+    <button id="btr2" aria-pressed="{{isPressed(bTr2)}}">bTr2</button>
   </div>
 
   <div class="input">
     <div class="slider">
-      <label for="acv">aCv</label>
-      <input id="acv" type="range" name="acv" min="0" max="1" step="0.01" value="{{aCv}}">
+      <label for="acv1">aCv1</label>
+      <input id="acv1" type="range" name="acv1" min="0" max="1" step="0.01" value="{{aCv1}}">
     </div>
 
-    <div class="value" role="presentation">{{aCv}}</div>
+    <div class="value" role="presentation">{{aCv1}}</div>
   </div>
 
   <div class="input">
     <div class="slider">
-      <label for="acv2">aCv</label>
-      <input id="acv2" type="range" name="acv" min="0" max="1" step="0.01" value="{{aCv}}">
+      <label for="acv2">aCv2</label>
+      <input id="acv2" type="range" name="acv2" min="0" max="1" step="0.01" value="{{aCv2}}">
     </div>
 
-    <div class="value" role="presentation">{{aCv}}</div>
+    <div class="value" role="presentation">{{aCv2}}</div>
+  </div>
+
+  <div class="input">
+    <div class="slider">
+      <label for="bcv1">bCv1</label>
+      <input id="bcv1" type="range" name="bcv1" min="0" max="1" step="0.01" value="{{bCv1}}">
+    </div>
+
+    <div class="value" role="presentation">{{bCv1}}</div>
+  </div>
+
+  <div class="input">
+    <div class="slider">
+      <label for="bcv2">bCv2</label>
+      <input id="bcv2" type="range" name="bcv2" min="0" max="1" step="0.01" value="{{bCv2}}">
+    </div>
+
+    <div class="value" role="presentation">{{bCv2}}</div>
   </div>
 </template>
