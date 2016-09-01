@@ -2,12 +2,17 @@ const express = require('express')
 const http = require('http')
 const socket = require('socket.io')
 const redux = require('redux')
+const osc = require('osc')
 
 const app = express()
 const server = http.Server(app)
 const io = socket(server)
 
-let timeout
+const udpPort = new osc.UDPPort({
+  localAddress: '0.0.0.0',
+  localPort: 9000
+})
+
 const initialState = {
   triggers: [
     {
@@ -71,6 +76,9 @@ const initialState = {
   ]
 }
 
+let timeouts = {}
+let modules = []
+
 function reducer (state = initialState, action) {
   switch (action.type) {
     case 'setTrigger':
@@ -96,6 +104,37 @@ function reducer (state = initialState, action) {
 
 const store = redux.createStore(reducer)
 
+udpPort.open()
+
+udpPort.on('message', function (oscMsg) {
+  const target = oscMsg.args[0].split(':');
+  const ip = target[0];
+  const port = target[1];
+  const moduleExists = modules.filter((module) => (module.ip === ip && module.port === port)).length;
+
+  if (!moduleExists) {
+    modules.push({
+      ip,
+      port
+    })
+  }
+
+  console.log('Connected modules', modules);
+});
+
+Meteor.methods({
+  'udpPort.send'({module, address, value}) {
+    const targetModule = modules[module];
+
+    if (targetModule) {
+      udpPort.send({
+        address: address,
+        args: [value]
+      }, targetModule.ip, targetModule.port);
+    }
+  }
+});
+
 server.listen(9000)
 
 app.use(express.static('public'))
@@ -112,7 +151,11 @@ io.on('connection', function (socket) {
 
     io.sockets.emit('update', store.getState())
 
-    timeout = setTimeout(function () {
+    if (timeouts[id]) {
+      clearTimeout(timeouts[id]);
+    }
+
+    timeouts[id] = setTimeout(function () {
       store.dispatch({
         type: 'setTrigger',
         value: 0,
@@ -120,8 +163,6 @@ io.on('connection', function (socket) {
       })
 
       io.sockets.emit('update', store.getState())
-
-      clearTimeout(timeout);
     }, 1000)
   })
 
