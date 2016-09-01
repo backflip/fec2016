@@ -37,9 +37,11 @@ a:focus {
 }
 
 .wrapper {
+  box-sizing: border-box;
   max-width: 60rem;
   margin: 0 auto;
   padding: 0 1rem;
+  width: 100%;
 }
 
 header {
@@ -47,7 +49,16 @@ header {
 }
 
 main {
+  padding-top: 1em;
   flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+main .wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 footer {
@@ -66,6 +77,10 @@ h1 {
   display: flex;
   margin-bottom: 1rem;
 }
+.input.var_buttons {
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
 
 .slider {
   flex: 1;
@@ -75,7 +90,7 @@ h1 {
 }
 
 .slider label,
-.github span {
+button span {
   position: absolute;
   clip: rect(1px, 1px, 1px, 1px);
   padding: 0;
@@ -94,6 +109,9 @@ h1 {
 }
 
 button {
+  flex: 1;
+  min-height: 3.25rem;
+  margin: 0 0.5rem;
   padding: 1.375rem 1.25rem;
   border-radius: 0.1875rem;
   border: none;
@@ -103,7 +121,6 @@ button {
   background: #c6c6c6;
   -webkit-transition: all 400ms ease;
   transition: all 400ms ease;
-  margin-right: 0.5rem;
   cursor: pointer;
   -webkit-user-select: none; /* Allow for tap and hold */
 }
@@ -112,15 +129,22 @@ button:focus {
   background: #000;
   outline: 0;
 }
-button[aria-pressed=true] {
+.touch button:hover,
+.touch button:focus {
+  background: #c6c6c6;
+}
+button[aria-pressed=true],
+.touch button[aria-pressed=true] {
   background: #cc3a57;
 }
+
 .github {
+  display: inline-block;
+}
+.github svg {
   position: relative;
   top: 0.1em;
   margin-left: 0.2em;
-}
-.github svg {
   fill: #848484;
   transition: fill .3s ease;
   width: 1em;
@@ -167,51 +191,47 @@ input[type=range]::-webkit-slider-thumb {
   box-sizing: border-box
 }
 input[type=range]::-moz-range-track {
-  height: 10px;
+  height: 2px;
   background: #fff;
   border: 0;
-  border-radius: 5px;
+  border-radius: 1px;
   -moz-user-select: none;
   user-select: none
 }
 input[type=range]::-moz-range-thumb {
   position: relative;
-  height: 26px;
-  width: 26px;
-  background: linear-gradient(to left top, #00BD9C, #0081C5);
-  border: 3px solid #fff;
+  height: 22px;
+  width: 22px;
+  background: #000;
   border-radius: 100%;
   transition: background .3s ease;
-  box-shadow: 0 1px 2px rgba(52, 63, 74, .4);
   box-sizing: border-box
 }
 input[type=range]::-moz-focus-outer {
   border: 0
 }
 input[type=range]::-ms-track {
-  height: 10px;
+  height: 2px;
   background: 0 0;
   border: 0;
   color: transparent
 }
 input[type=range]::-ms-fill-lower,
 input[type=range]::-ms-fill-upper {
-  height: 10px;
+  height: 2px;
   background: #fff;
   border: 0;
-  border-radius: 5px;
+  border-radius: 1px;
   -ms-user-select: none;
   user-select: none
 }
 input[type=range]::-ms-thumb {
   position: relative;
-  height: 26px;
-  width: 26px;
-  background: linear-gradient(to left top, #00BD9C, #0081C5);
-  border: 3px solid #fff;
+  height: 22px;
+  width: 22px;
+  background: #000;
   border-radius: 100%;
   transition: background .3s ease;
-  box-shadow: 0 1px 2px rgba(52, 63, 74, .4);
   box-sizing: border-box;
   margin-top: 0
 }
@@ -230,7 +250,6 @@ input[type=range]::-moz-range-track {
 input[type=range]::-ms-track {
   background: #333333
 }
-
 
 
 

@@ -7,50 +7,48 @@ class App extends Component {
     super(props)
 
     this.state = {
-      trigger: 0,
-      range: 0
+      triggers: [],
+      cvs: []
     }
 
     this.handleTrigger = this.handleTrigger.bind(this)
-    this.handleChange = this.handleChange.bind(this)
+    this.handleCV = this.handleCV.bind(this)
 
     this.socket = io('http://localhost:9000')
-
     this.socket.on('update', this.setState.bind(this))
   }
 
-  handleTrigger () {
-    this.socket.emit('setTrigger')
+  handleTrigger (event) {
+    const id = event.target.getAttribute('id')
+
+    this.socket.emit('setTrigger', id)
   }
 
-  handleChange (event) {
+  handleCV (event) {
+    const id = event.target.getAttribute('id')
     const value = event.target.value
-    this.socket.emit('setRange', value)
+
+    this.socket.emit('setCV', id, value)
   }
 
   render () {
     return <div>
-      <div className="input">
-        <button className="a-tr" aria-pressed={this.state.trigger ? true : false} onClick={this.handleTrigger}>a tr</button>
-        <button className="a-tr" aria-pressed={this.state.trigger ? true : false} onClick={this.handleTrigger}>a tr</button>
-      </div>
+      {this.state.cvs.map((cv) => {
+        return <div key={cv.id} className="input">
+          <div className="slider">
+            <label htmlFor={cv.id}>{cv.label}</label>
+            <input id={cv.id} type="range" name={cv.id} min="0" max="1" step="0.01" onChange={this.handleCV} value={cv.value} data-init="cv" data-address={cv.address} data-module={cv.module} />
+          </div>
 
-      <div className="input">
-        <div className="slider">
-          <label htmlFor="acv">aCv</label>
-          <input id="acv" type="range" name="acv" min="0" max="1" step="0.01" onChange={this.handleChange} value={this.state.range} />
+          <div className="value" role="presentation">{cv.value}</div>
         </div>
-
-        <div className="value" role="presentation">{this.state.range}</div>
-      </div>
-
-      <div className="input">
-        <div className="slider">
-          <label htmlFor="acv2">aCv</label>
-          <input id="acv2" type="range" name="acv" min="0" max="1" step="0.01" onChange={this.handleChange} value={this.state.range} />
-        </div>
-
-        <div className="value" role="presentation">{this.state.range}</div>
+      })}
+      <div className="input var_buttons">
+        {this.state.triggers.map((trigger) => {
+          return <button key={trigger.id} id={trigger.id} aria-pressed={trigger.value ? true : false} onClick={this.handleTrigger} data-init="trigger" data-address={trigger.address} data-module={trigger.module}>
+            <span>{trigger.label}</span>
+          </button>
+        })}
       </div>
     </div>
   }
