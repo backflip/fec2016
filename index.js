@@ -20,7 +20,7 @@ function storeReducer (state = initialState, action) {
     case 'setTrigger':
       state.triggers.map(function(trigger) {
         if (trigger.id === action.id) {
-          trigger.value = action.value;
+          trigger.value = parseFloat(action.value);
 
           oscWrapper.sendSignal(trigger)
         }
@@ -30,7 +30,7 @@ function storeReducer (state = initialState, action) {
     case 'setCV':
       state.cvs.map(function(cv) {
         if (cv.id === action.id) {
-          cv.value = action.value;
+          cv.value = parseFloat(action.value);
 
           oscWrapper.sendSignal(cv)
         }
@@ -54,7 +54,7 @@ function dispatch (type, id, value) {
 
 const store = redux.createStore(storeReducer)
 
-server.listen(9000)
+server.listen(3001)
 
 app.use(express.static('public'))
 

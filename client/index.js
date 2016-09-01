@@ -14,7 +14,7 @@ class App extends Component {
     this.handleTrigger = this.handleTrigger.bind(this)
     this.handleCV = this.handleCV.bind(this)
 
-    this.socket = io('http://localhost:9000')
+    this.socket = io('http://localhost:3001')
     this.socket.on('update', this.setState.bind(this))
   }
 
