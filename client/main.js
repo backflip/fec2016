@@ -33,43 +33,13 @@ function getOSMObjectFromElement(element) {
 }
 
 Template.app.helpers({
-  getCVa0() {
-    var OSMObject = getOrCreateOSMObject('/osm/a/cv', 0);
+  getCV(address, module) {
+    var OSMObject = getOrCreateOSMObject(address, module);
 
     return OSMObject.value || 0;
   },
-  getCVb0() {
-    var OSMObject = getOrCreateOSMObject('/osm/b/cv', 0);
-
-    return OSMObject.value || 0;
-  },
-  getCVa1() {
-    var OSMObject = getOrCreateOSMObject('/osm/a/cv', 1);
-
-    return OSMObject.value || 0;
-  },
-  getCVb1() {
-    var OSMObject = getOrCreateOSMObject('/osm/b/cv', 1);
-
-    return OSMObject.value || 0;
-  },
-  isTriggereda0() {
-    var OSMObject = getOrCreateOSMObject('/osm/a/tr', 0);
-
-    return OSMObject.value && OSMObject.value !== 0;
-  },
-  isTriggeredb0() {
-    var OSMObject = getOrCreateOSMObject('/osm/b/tr', 0);
-
-    return OSMObject.value && OSMObject.value !== 0;
-  },
-  isTriggereda1() {
-    var OSMObject = getOrCreateOSMObject('/osm/a/tr', 1);
-
-    return OSMObject.value && OSMObject.value !== 0;
-  },
-  isTriggeredb1() {
-    var OSMObject = getOrCreateOSMObject('/osm/b/tr', 1);
+  isTriggered(address, module) {
+    var OSMObject = getOrCreateOSMObject(address, module);
 
     return OSMObject.value && OSMObject.value !== 0;
   }
