@@ -19,6 +19,14 @@ function getOrCreateOSMObject(address, module) {
   return OSMObject;
 }
 
+function getOSMObjectFromElement(element) {
+    var address = element.dataset.address;
+    var module = parseInt(element.dataset.module, 10);
+    var OSMObject = getOrCreateOSMObject(address, module);
+
+    return OSMObject;
+}
+
 Template.app.helpers({
   getCV(address, module) {
     var OSMObject = getOrCreateOSMObject(address, module);
@@ -35,10 +43,8 @@ Template.app.helpers({
 Template.app.events({
   'input [data-init="cv"]'(event, instance) {
     var element = event.currentTarget;
-    var address = element.dataset.address;
-    var module = element.dataset.module;
-    var value = parseFloat(event.currentTarget.value, 10);
-    var OSMObject = getOrCreateOSMObject(address, module);
+    var OSMObject = getOSMObjectFromElement(element);
+    var value = parseFloat(element.value, 10);
 
     OSMObject.value = value;
 
@@ -46,9 +52,7 @@ Template.app.events({
   },
   'click [data-init="trigger"], touchstart [data-init="trigger"]'(event, instance) {
     var element = event.currentTarget;
-    var address = element.dataset.address;
-    var module = element.dataset.module;
-    var OSMObject = getOrCreateOSMObject(address, module);
+    var OSMObject = getOSMObjectFromElement(element);
 
     Meteor.call('OSM.trigger', OSMObject);
   }
