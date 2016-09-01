@@ -34,13 +34,14 @@ class App extends Component {
   render () {
     return <div>
       {this.state.cvs.map((cv) => {
+        let style = {
+          background: 'rgba(204,58,78,' + cv.value + ')'
+        }
         return <div key={cv.id} className="input">
-          <div className="slider">
+          <div className="slider" style={style}>
             <label htmlFor={cv.id}>{cv.label}</label>
             <input id={cv.id} type="range" name={cv.id} min="0" max="1" step="0.01" onChange={this.handleCV} value={cv.value} data-init="cv" data-address={cv.address} data-module={cv.module} />
           </div>
-
-          <div className="value" role="presentation">{cv.value}</div>
         </div>
       })}
       <div className="input var_buttons">
