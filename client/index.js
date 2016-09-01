@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import io from 'socket.io-client'
 
+if (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
+  document.documentElement.classList.add('touch')
+}
+
 class App extends Component {
   constructor (props) {
     super(props)
