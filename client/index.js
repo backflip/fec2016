@@ -1,10 +1,16 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import io from 'socket.io-client'
+import rangetouch from 'rangetouch'
 
 if (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
   document.documentElement.classList.add('touch')
 }
+
+// Brute-force scroll prevention
+document.body.addEventListener('touchmove', function (event) {
+  event.preventDefault()
+})
 
 class App extends Component {
   constructor (props) {
@@ -18,7 +24,7 @@ class App extends Component {
     this.handleTrigger = this.handleTrigger.bind(this)
     this.handleCV = this.handleCV.bind(this)
 
-    this.socket = io('http://localhost:3001')
+    this.socket = io()
     this.socket.on('update', this.setState.bind(this))
   }
 

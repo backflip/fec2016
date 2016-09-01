@@ -13,30 +13,31 @@ const io = socket(server)
 const initialState = config
 
 let timeouts = {}
-let modules = []
 
 function storeReducer (state = initialState, action) {
   switch (action.type) {
     case 'setTrigger':
-      state.triggers.map(function(trigger) {
+      state.triggers.map(function (trigger) {
         if (trigger.id === action.id) {
-          trigger.value = parseFloat(action.value);
+          trigger.value = parseFloat(action.value)
 
           oscWrapper.sendSignal(trigger)
         }
 
-        return trigger;
+        return trigger
       })
+      break
     case 'setCV':
-      state.cvs.map(function(cv) {
+      state.cvs.map(function (cv) {
         if (cv.id === action.id) {
-          cv.value = parseFloat(action.value);
+          cv.value = parseFloat(action.value)
 
           oscWrapper.sendSignal(cv)
         }
 
-        return cv;
+        return cv
       })
+      break
     default:
       return state
   }
@@ -65,7 +66,7 @@ io.on('connection', function (socket) {
     dispatch('setTrigger', id, 1)
 
     if (timeouts[id]) {
-      clearTimeout(timeouts[id]);
+      clearTimeout(timeouts[id])
     }
 
     timeouts[id] = setTimeout(function () {
