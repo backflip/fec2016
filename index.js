@@ -26,7 +26,6 @@ function storeReducer (state = initialState, action) {
 
         return trigger
       })
-      break
     case 'setCV':
       state.cvs.map(function (cv) {
         if (cv.id === action.id) {
@@ -37,7 +36,6 @@ function storeReducer (state = initialState, action) {
 
         return cv
       })
-      break
     default:
       return state
   }
