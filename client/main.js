@@ -44,7 +44,7 @@ Template.app.events({
 
     Meteor.call('OSM.update', OSMObject);
   },
-  'mousedown [data-init="trigger"], touchstart [data-init="trigger"]'(event, instance) {
+  'click [data-init="trigger"], touchstart [data-init="trigger"]'(event, instance) {
     var element = event.currentTarget;
     var address = element.dataset.address;
     var module = element.dataset.module;
