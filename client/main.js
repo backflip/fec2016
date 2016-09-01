@@ -6,6 +6,11 @@ if (('ontouchstart' in window) || window.DocumentTouch && document instanceof Do
   document.documentElement.classList.add('touch');
 }
 
+// Brute-force scroll prevention
+document.body.addEventListener('touchmove', function(event) {
+  event.preventDefault();
+});
+
 function getOrCreateOSMObject(address, module) {
   var data = {address, module};
   var OSMObject = OSM.findOne(data);

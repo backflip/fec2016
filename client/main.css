@@ -74,10 +74,12 @@ h1 {
 }
 
 .input {
+    background: #c6c6c6;
     display: flex;
     margin-bottom: 1rem;
 }
 .input.var_buttons {
+    background: transparent;
     margin-top: 2rem;
     margin-left: -0.5rem;
     margin-right: -0.5rem;

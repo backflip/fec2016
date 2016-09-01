@@ -13,6 +13,10 @@ const udpPort = new osc.UDPPort({
 udpPort.open();
 
 udpPort.on('message', function (oscMsg) {
+  if (!(oscMsg.args && oscMsg.args[0])) {
+    return;
+  }
+
   const target = oscMsg.args[0].split(':');
   const ip = target[0];
   const port = target[1];
