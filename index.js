@@ -42,21 +42,11 @@ function storeReducer (state = initialState, action) {
   }
 }
 
-function setTrigger (id) {
+function dispatch (type, id, value) {
   store.dispatch({
-    type: 'setTrigger',
-    value: 1,
+    type,
+    value,
     id
-  })
-
-  io.sockets.emit('update', store.getState())
-}
-
-function setCV (id, value) {
-  store.dispatch({
-    type: 'setCV',
-    id,
-    value
   })
 
   io.sockets.emit('update', store.getState())
@@ -72,18 +62,18 @@ io.on('connection', function (socket) {
   socket.emit('update', store.getState())
 
   socket.on('setTrigger', function (id) {
-    setTrigger(id)
+    dispatch('setTrigger', id, 1)
 
     if (timeouts[id]) {
       clearTimeout(timeouts[id]);
     }
 
     timeouts[id] = setTimeout(function () {
-      setTrigger(id)
+      dispatch('setTrigger', id, 0)
     }, 100)
   })
 
   socket.on('setCV', function (id, value) {
-    setCV(id, value)
+    dispatch('setCV', id, value)
   })
 })
